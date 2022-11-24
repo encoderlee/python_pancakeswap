@@ -134,7 +134,6 @@ def main():
     balance = pancake.erc20_balance(Known.cake)
     print("cake balance: {0}".format(balance))
 
-
     limit_price = Decimal("4.1")
     amount_buy = Decimal(1)
     print("if the price of cake is lower than {0} busd/cake, buy {1} busd of cake".format(limit_price, amount_buy))
