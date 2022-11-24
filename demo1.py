@@ -152,11 +152,11 @@ def main():
     while True:
         price = pancake.query_cake_price(token_path)
         print("cake price: {0} busd/cake".format(price))
-        time.sleep(2)
         if price <= limit_price:
             print("price ok, buy {0} busd of cake".format(amount_buy))
             pancake.swap_token(amount_buy, token_path)
             break
+        time.sleep(2)
 
 
 if __name__ == '__main__':
