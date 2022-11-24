@@ -97,7 +97,7 @@ class Pancake:
         contract = self.get_contract(erc20)
         approve_amount = 2 ** 256 - 1
         amount = contract.functions.allowance(self.wallet, Known.pancakeswap.address).call()
-        if amount >= approve_amount:
+        if amount >= approve_amount / 2:
             print("already approved")
             return None
         txn = contract.functions.approve(Known.pancakeswap.address, approve_amount)
