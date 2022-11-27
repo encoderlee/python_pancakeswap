@@ -96,12 +96,12 @@ class Pancake:
         return self.send_transaction(txn)
 
     # query the price of token pair
-    def query_cake_price(self, token_path: List[Contract]) -> Decimal:
+    def query_price(self, token_path: List[Contract]) -> Decimal:
         contract = self.get_contract(Known.pancakeswap)
         path = [item.address for item in token_path]
         amount = contract.functions.getAmountsOut(1 * 10 ** token_path[0].decimals, path).call()
-        amount_in = Decimal(amount[0]) / token_path[0].decimals
-        amount_out = Decimal(amount[1]) / token_path[-1].decimals
+        amount_in = Decimal(amount[0]) / (10 ** token_path[0].decimals)
+        amount_out = Decimal(amount[1]) / (10 ** token_path[-1].decimals)
         return amount_in / amount_out
 
     # swap token
@@ -141,7 +141,7 @@ def main():
     token_path = [Known.busd, Known.cake]
 
     while True:
-        price = pancake.query_cake_price(token_path)
+        price = pancake.query_price(token_path)
         print("cake price: {0} busd/cake".format(price))
         if price <= limit_price:
             print("price ok, buy {0} busd of cake".format(amount_buy))
