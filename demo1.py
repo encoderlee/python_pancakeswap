@@ -112,7 +112,7 @@ class Pancake:
         contract = self.get_contract(Known.pancakeswap)
         path = [item.address for item in token_path]
 
-        amount_in = int(amount_in * token_path[0].decimals)
+        amount_in = int(amount_in * 10 ** token_path[0].decimals)
         amount = contract.functions.getAmountsOut(amount_in, path).call()
         # slippage 0.5% fee 0.25% ，minimum received 99.25 %
         minimum_out = int(amount[1] * (1 - Decimal("0.005") - Decimal("0.0025")))
