@@ -17,7 +17,7 @@ class Contract:
 
     def __init__(self, symbol: str, address: str, decimals: int = None):
         self.symbol = symbol  # unimportant, only show
-        self.address = Web3.toChecksumAddress(address)
+        self.address = Web3.to_checksum_address(address)
         self.decimals = decimals
 
 
@@ -31,14 +31,14 @@ class Pancake:
     abi_cache: Dict[str, Dict] = {}
 
     def __init__(self, address_wallet: str, private_key: str = None):
-        self.wallet: str = Web3.toChecksumAddress(address_wallet)
+        self.wallet: str = Web3.to_checksum_address(address_wallet)
         self.private_key = private_key
         self.client = web3.Web3(web3.HTTPProvider("https://bsc-dataseed1.binance.org"))
         self.client.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     # fetch contract abi if not cache
     def fetch_abi(self, address: str):
-        address = Web3.toChecksumAddress(address)
+        address = Web3.to_checksum_address(address)
         abi = Pancake.abi_cache.get(address)
         if not abi:
             url = "https://api.bscscan.com/api"
@@ -78,7 +78,7 @@ class Pancake:
         })
         signed_txn = self.client.eth.account.sign_transaction(txn, self.private_key)
         txn_hash = self.client.eth.send_raw_transaction(signed_txn.rawTransaction)
-        txn_hash = self.client.toHex(txn_hash)
+        txn_hash = self.client.to_hex(txn_hash)
         print("send transaction: {0}".format(txn_hash))
         txn_receipt = self.client.eth.wait_for_transaction_receipt(txn_hash)
         print("transaction ok: {0}".format(txn_receipt))

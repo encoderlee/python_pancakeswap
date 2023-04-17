@@ -1,2 +1,2 @@
-web3 == 5.31.4
+web3 == 6.2.0
 requests
